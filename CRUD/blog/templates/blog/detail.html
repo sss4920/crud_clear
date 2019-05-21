@@ -1,0 +1,30 @@
+{% extends 'blog/layout.html' %}
+
+
+{% block content %}
+    <div class="container">
+            <div class="jumbotron">
+                    <h1 class="display-4">{{ blog.title }}</h1>
+                    <p class="lead">{{ blog.content }}</p>
+                    <hr class="my-4">
+                    <p>만든 날짜: {{ blog.created_at }}</p>
+                    <p>수정 날짜: {{ blog.published_at }}</p>
+                    <a class="btn btn-secondary" href="{% url 'edit' blog.id %}" role="button">수정</a>
+                    <a class="btn btn-danger" href="{% url 'remove' blog.id %}" role="button">삭제</a>
+                </div>
+        {% for comment in blog.comments.all %}
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                    <h1 class="display-4">{{ comment.comment_text }}</h1>
+                    <a class="btn btn-secondary" href="{% url 'comment_edit' blog.id comment.id %}" role="button">수정</a>
+                    <a class="btn btn-danger" href="{% url 'comment_remove' blog.id comment.id %}" role="button">삭제</a>
+                </div>
+            </div>
+        {% endfor %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input class="btn btn-primary" type="submit" value="Submit">
+        </form>
+    </div>
+{% endblock %}

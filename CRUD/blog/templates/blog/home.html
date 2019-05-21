@@ -1,0 +1,12 @@
+{% extends 'blog/layout.html' %}
+
+{% block content %}
+{% for blog in blogs.all %}
+    <h1>{{ blog.title }}</h1>
+    <p>{{ blog.pub_date }}</p>
+    <p>{{ blog.body }}</p>
+    <a href="{% url 'edit' blog.id %}">수정</a>
+    <a href="{% url 'remove' blog.id %}">삭제</a>
+    <a href="{% url 'detail' blog.id %}">댓글 달기</a>
+{% endfor %}
+{% endblock %}
